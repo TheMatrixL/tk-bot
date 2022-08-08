@@ -1,10 +1,5 @@
 import httpx
 
-global_label = "https://www.tkmaxx.com/uk/en/womens-gold-label/c/01090000/autoLoad?page="
-big_brand_drop = "https://www.tkmaxx.com/uk/en/women/edits/big-brand-drop/c/01240000/autoLoad?page="
-today_arrivals = "https://www.tkmaxx.com/uk/en/todays-arrivals/c/00000000/autoLoad?page="
-
-
 def get_url(url, page):
     headers = {'user-agent': 'My User Agent 1.0'}
     return httpx.get(url + f"{page}", headers=headers)
@@ -40,5 +35,8 @@ def find_tk(url):
                 reslist.append(res)
     print(f"err: {errs}")
     return reslist
+
+if __name__ == "__main__":
+  find_tk()
 
 
