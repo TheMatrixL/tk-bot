@@ -20,15 +20,15 @@ def find_tk(url):
             res = {}
             try:
                 res["Brand"] = jsondata["results"][i]["brandName"]
-                res["Label"] = jsondata["results"][i]["label"]
+                # res["Label"] = jsondata["results"][i]["label"]
                 res["Url"] = "https://www.tkmaxx.com" + jsondata["results"][i]["url"]
                 res["Price"] = jsondata["results"][i]["price"]["formattedValue"]
                 res["Image"] = jsondata["results"][i]["image"]["url"]
-                res["Stock value"] = jsondata["results"][i]["stockValue"]
-                res["RRP Price"] = jsondata["results"][i]["rrpPrice"]["formattedValue"]
-                res["Was Price"] = jsondata["results"][i]["wasPrice"]["formattedValue"]
-                res["Save"] = jsondata["results"][i]["savePrice"]["formattedValue"]
-                res["savePricePercentage"] = jsondata["results"][i]["savePricePercentage"]
+                # res["Stock value"] = jsondata["results"][i]["stockValue"]
+                # res["RRP Price"] = jsondata["results"][i]["rrpPrice"]["formattedValue"]
+                # res["Was Price"] = jsondata["results"][i]["wasPrice"]["formattedValue"]
+                # res["Save"] = jsondata["results"][i]["savePrice"]["formattedValue"]
+                # res["savePricePercentage"] = jsondata["results"][i]["savePricePercentage"]
             except:
                 errs += 1
             finally:

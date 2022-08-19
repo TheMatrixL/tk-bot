@@ -1,44 +1,41 @@
 import os
-import discord
-import brand as bd
+from discord.ext import commands
 from tk import find_tk
 from keep_alive import keep_alive
+import url_data as ud
 
 key = os.environ['key']
 
-client = discord.Client()
+bot = commands.Bot(command_prefix='$', description="This is a TK Bot")
 
-@client.event
+@bot.event
 async def on_ready():
-    print('We have logged in as {0.user}'.format(client))
+  print('We have logged in as {0.user}'.format(bot))
 
-@client.event
-async def on_message(message):
-
-    async def send_message(category, brand):
-      data = find_tk(category)
+@bot.command()
+async def tk(ctx, arg):
+  
+    async def send_message(category_url, brand, total_page):    
+      data = find_tk(category_url)
       pages = 0
       for i in range(len(data)):
         if data[i]["Brand"] == brand:
           pages += 1
-          await message.channel.send(data[i]["Image"])
-          await message.channel.send("Price: " + data[i]["Price"])
-          await message.channel.send(data[i]["Url"])
-      await message.channel.send("Today_arrivals Total: " + str(pages))
+          await ctx.send(data[i]["Image"])
+          await ctx.send("Price: " + data[i]["Price"])
+          await ctx.send(data[i]["Url"])
+      await ctx.send(f"{total_page}: {(pages)}")    
       
-    if message.author == client.user:
-        return
-
-    if message.content.startswith("$mk"):
-      await send_message(bd.today_arrivals, bd.brand_name["$mk"])
-      await send_message(bd.global_label, bd.brand_name["$mk"])
-          
-    elif message.content.startswith("$ck"):
-      await send_message(bd.today_arrivals, bd.brand_name["$ck"])
-      await send_message(bd.global_label, bd.brand_name["$ck"])
-    
+    if arg in ud.brand_name:
+      await send_message(ud.today_arrivals, ud.brand_name[arg], "Today_arrivals")
+      await send_message(ud.global_label, ud.brand_name[arg], "Global_label")
+      await send_message(ud.clearance, ud.brand_name[arg], "Clearance")
+      
+    else:  
+      await ctx.send("Please enter other brand.")
+                     
 keep_alive()
-client.run(key)
+bot.run(key)
 
 
 
